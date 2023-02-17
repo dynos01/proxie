@@ -1,0 +1,11 @@
+[package]
+name = "proxie"
+version = "0.0.0"
+license = "MIT"
+description = "Library for making requests through HTTP or SOCKS proxy"
+readme = "README.md"
+repository = "https://github.com/dynos01/proxie"
+categories = ["network-programming"]
+include = ["src/**/*.rs", "Cargo.toml", "README.md"]
+
+[dependencies]
