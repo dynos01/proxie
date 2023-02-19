@@ -2,7 +2,7 @@ use std::{
     string::ToString,
     net::{Ipv4Addr, Ipv6Addr, SocketAddr},
 };
-use error::*;
+use crate::error::*;
 
 pub(crate) enum TargetHost {
     IPv4(String),

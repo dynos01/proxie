@@ -1,6 +1,7 @@
 [package]
 name = "proxie"
 version = "0.0.0"
+edition = "2021"
 license = "MIT"
 description = "Library for making requests through HTTP or SOCKS proxy"
 readme = "README.md"
