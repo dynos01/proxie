@@ -9,3 +9,5 @@ categories = ["network-programming"]
 include = ["src/**/*.rs", "Cargo.toml", "README.md"]
 
 [dependencies]
+base64 = "0.21.0"
+httparse = "1.8.0"
