@@ -1,10 +1,6 @@
-use std::{
-    net::{SocketAddr, IpAddr}
-};
-
-struct Auth {
-    username: String,
-    password: String,
+pub struct Auth {
+    pub(crate) username: String,
+    pub(crate) password: String,
 }
 
 impl Auth {
@@ -16,21 +12,18 @@ impl Auth {
     }
 }
 
-struct HTTPConfig {
-    server: SocketAddr,
-    auth: Option<Auth>,
+pub struct HTTPProxy {
+    pub(crate) server: String,
+    pub(crate) port: u16,
+    pub(crate) auth: Option<Auth>,
 }
 
-impl HTTPConfig {
-    pub fn new(ip: IpAddr, port: u16, auth: Option<Auth>) -> Self {
+impl HTTPProxy {
+    pub fn new(server: &str, port: u16, auth: Option<Auth>) -> Self {
         Self {
-            server: SocketAddr::new(ip, port),
+            server: server.into(),
+            port: port,
             auth: auth,
         }
     }
-}
-
-pub enum Proxy {
-    Direct,
-    HTTP(HTTPConfig),
 }

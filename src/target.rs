@@ -4,19 +4,19 @@ use std::{
 };
 use error::*;
 
-pub enum TargetHost {
+pub(crate) enum TargetHost {
     IPv4(String),
     IPv6(String),
     Hostname(String),
 }
 
 pub struct Target {
-    pub host: TargetHost,
-    pub port: u16,
+    pub(crate) host: TargetHost,
+    pub(crate) port: u16,
 }
 
 impl Target {
-    pub fn new(host: TargetHost, port: u16) -> Self {
+    pub(crate) fn new(host: TargetHost, port: u16) -> Self {
         Self {
             host: host,
             port: port,
@@ -34,11 +34,11 @@ impl ToString for Target {
     }
 }
 
-trait ToTarget {
+pub trait ToTarget {
     fn to_target(&self) -> Result<Target, MalformedTargetError>;
 }
 
-impl ToTarget for str {
+impl ToTarget for &str {
     fn to_target(&self) -> Result<Target, MalformedTargetError> {
         let colon_pos = match self.find(':') {
             Some(pos) => pos,

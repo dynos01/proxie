@@ -1,7 +1,11 @@
-mod proxy;
+pub mod proxy;
 mod error;
 mod target;
-mod sync;
+pub mod sync;
+mod utils;
+mod prelude;
 
-pub fn nothing_here() {
-}
+extern crate base64;
+extern crate httparse;
+
+pub use proxy::{Auth, HTTPProxy};
