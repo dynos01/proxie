@@ -18,8 +18,8 @@ pub struct Target {
 impl Target {
     pub(crate) fn new(host: TargetHost, port: u16) -> Self {
         Self {
-            host: host,
-            port: port,
+            host,
+            port,
         }
     }
 }

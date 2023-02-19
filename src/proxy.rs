@@ -22,8 +22,8 @@ impl HTTPProxy {
     pub fn new(server: &str, port: u16, auth: Option<Auth>) -> Self {
         Self {
             server: server.into(),
-            port: port,
-            auth: auth,
+            port,
+            auth,
         }
     }
 }
