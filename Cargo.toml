@@ -12,3 +12,5 @@ include = ["src/**/*.rs", "Cargo.toml", "README.md"]
 [dependencies]
 base64 = "0.21.0"
 httparse = "1.8.0"
+async-trait = "0.1.64"
+async-std = "1.12.0"
