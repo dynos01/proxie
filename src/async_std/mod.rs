@@ -1,4 +1,5 @@
 mod http;
+mod socks5;
 
 use async_std::net::TcpStream;
 use async_trait::async_trait;
