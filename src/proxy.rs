@@ -27,3 +27,23 @@ impl HTTPProxy {
         }
     }
 }
+
+pub struct SOCKS5Proxy {
+    pub(crate) server: String,
+    pub(crate) port: u16,
+    pub(crate) auth: Option<Auth>,
+}
+
+impl SOCKS5Proxy {
+    pub fn new(server: &str, port: u16, auth: Option<Auth>) -> Self {
+        Self {
+            server: server.into(),
+            port,
+            auth,
+        }
+    }
+}
+
+pub(crate) enum SOCKS5Command {
+    CONNECT,
+}

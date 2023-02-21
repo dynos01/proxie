@@ -5,8 +5,8 @@ use std::{
 use crate::error::*;
 
 pub(crate) enum TargetHost {
-    IPv4(String),
-    IPv6(String),
+    IPv4(Ipv4Addr),
+    IPv6(Ipv6Addr),
     Hostname(String),
 }
 
@@ -55,12 +55,12 @@ impl ToTarget for &str {
 
         let host = if host.starts_with('[') && host.ends_with(']') {
             match host[1..host.len() - 1].parse::<Ipv6Addr>() {
-                Ok(_) => TargetHost::IPv6(host.into()),
+                Ok(ip) => TargetHost::IPv6(ip),
                 Err(_) => return Err(MalformedTargetError),
             }
         } else {
             match host.parse::<Ipv4Addr>() {
-                Ok(_) => TargetHost::IPv4(host.into()),
+                Ok(ip) => TargetHost::IPv4(ip),
                 Err(_) => {
                     if host.is_empty() || host.ends_with('.') {
                         return Err(MalformedTargetError);
@@ -88,8 +88,8 @@ impl ToTarget for String {
 impl ToTarget for SocketAddr {
     fn to_target(&self) -> Result<Target, MalformedTargetError> {
         let host = match self {
-            SocketAddr::V4(ip) => TargetHost::IPv4(format!("{}", ip)),
-            SocketAddr::V6(ip) => TargetHost::IPv4(format!("[{}]", ip)),
+            SocketAddr::V4(socket) => TargetHost::IPv4(*socket.ip()),
+            SocketAddr::V6(socket) => TargetHost::IPv6(*socket.ip()),
         };
         let port = self.port();
 

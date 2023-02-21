@@ -55,3 +55,54 @@ impl Error for FailedToConnectError {
         None
     }
 }
+
+#[derive(Debug)]
+pub(crate) struct Socks5HandshakeError {
+    pub(crate) socket: SocketAddr,
+}
+
+impl Display for Socks5HandshakeError {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        write!(f, "Failed to complete handshake with SOCKS 5 server: {}. ", self.socket)
+    }
+}
+
+impl Error for Socks5HandshakeError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        None
+    }
+}
+
+const SOCKS5_REP_ERROR_MESSAGE: [&'static str; 8] = [ //RFC 1928, Chapter 6
+    "General SOCKS server failure",
+    "Connection not allowed by ruleset",
+    "Network unreachable",
+    "Host unreachable",
+    "Connection refused",
+    "TTL expired",
+    "Command not supported",
+    "Address type not supported",
+];
+
+#[derive(Debug)]
+pub(crate) struct Socks5RequestError {
+    pub(crate) socket: SocketAddr,
+    pub(crate) error_type: u8,
+}
+
+impl Display for Socks5RequestError {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        let reason = if self.error_type < 8 {
+            SOCKS5_REP_ERROR_MESSAGE[(self.error_type - 1) as usize]
+        } else {
+            "Unknown error"
+        };
+        write!(f, "SOCKS 5 server {} refused request. Reason: {}. ", self.socket, reason)
+    }
+}
+
+impl Error for Socks5RequestError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        None
+    }
+}

@@ -1,4 +1,5 @@
 mod http;
+mod socks5;
 
 use std::{
     net::{TcpStream},

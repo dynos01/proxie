@@ -6,4 +6,4 @@ pub mod async_std;
 mod utils;
 mod prelude;
 
-pub use proxy::{Auth, HTTPProxy};
+pub use proxy::{Auth, HTTPProxy, SOCKS5Proxy};
