@@ -8,11 +8,11 @@ use crate::{
     error::*,
     target::ToTarget,
     proxy::{SOCKS5Proxy, SOCKS5Command},
-    sync::SyncProxy,
+    sync::{SyncProxy, SyncTcpStream},
 };
 
 impl SyncProxy for SOCKS5Proxy {
-    fn connect(&self, addr: impl ToTarget) -> Result<TcpStream> {
+    fn connect(&self, addr: impl ToTarget) -> Result<SyncTcpStream> {
         let mut stream = TcpStream::connect((&*self.server, self.port))?;
 
         let auth_method = self.connect(&mut stream)?;
@@ -23,7 +23,9 @@ impl SyncProxy for SOCKS5Proxy {
 
         self.request(&mut stream, addr)?;
 
-        Ok(stream)
+        Ok(SyncTcpStream {
+            stream,
+        })
     }
 }
 

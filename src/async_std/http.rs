@@ -8,12 +8,12 @@ use crate::{
     utils::*,
     target::ToTarget,
     proxy::HTTPProxy,
-    async_std::AsyncProxy,
+    async_std::{AsyncProxy, AsyncTcpStream},
 };
 
 #[async_trait]
 impl AsyncProxy for HTTPProxy {
-    async fn connect(&self, addr: impl ToTarget + Send) -> Result<TcpStream> {
+    async fn connect(&self, addr: impl ToTarget + Send) -> Result<AsyncTcpStream> {
         let request = make_http_connect_request(&addr, &self)?;
 
         let mut stream = TcpStream::connect((&*self.server, self.port)).await?;
@@ -33,6 +33,8 @@ impl AsyncProxy for HTTPProxy {
 
         parse_http_response(&buffer.as_bytes())?;
 
-        Ok(stream)
+        Ok(AsyncTcpStream {
+            stream
+        })
     }
 }
