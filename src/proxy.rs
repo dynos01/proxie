@@ -19,7 +19,8 @@ pub struct HTTPProxy {
 }
 
 impl HTTPProxy {
-    pub fn new(server: &str, port: u16, auth: Option<Auth>) -> Self {
+    pub fn new<T: Into<Option<Auth>>>(server: &str, port: u16, auth: T) -> Self {
+        let auth = auth.into();
         Self {
             server: server.into(),
             port,
@@ -35,7 +36,8 @@ pub struct SOCKS5Proxy {
 }
 
 impl SOCKS5Proxy {
-    pub fn new(server: &str, port: u16, auth: Option<Auth>) -> Self {
+    pub fn new<T: Into<Option<Auth>>>(server: &str, port: u16, auth: T) -> Self {
+        let auth = auth.into();
         Self {
             server: server.into(),
             port,
