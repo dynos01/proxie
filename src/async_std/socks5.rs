@@ -9,12 +9,12 @@ use crate::{
     error::*,
     target::ToTarget,
     proxy::{SOCKS5Proxy, SOCKS5Command},
-    async_std::{AsyncProxy, AsyncTcpStream},
+    async_std::AsyncProxy,
 };
 
 #[async_trait]
 impl AsyncProxy for SOCKS5Proxy {
-    async fn connect(&self, addr: impl ToTarget + Send) -> Result<AsyncTcpStream> {
+    async fn connect(&self, addr: impl ToTarget + Send) -> Result<TcpStream> {
         let mut stream = TcpStream::connect((&*self.server, self.port)).await?;
 
         let auth_method = self.async_std_connect(&mut stream).await?;
@@ -25,9 +25,7 @@ impl AsyncProxy for SOCKS5Proxy {
 
         self.async_std_request(&mut stream, addr).await?;
 
-        Ok(AsyncTcpStream {
-            stream
-        })
+        Ok(stream)
     }
 }
 
