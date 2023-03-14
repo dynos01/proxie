@@ -1,6 +1,6 @@
 [package]
 name = "proxie"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 license = "MIT"
 description = "Library for making requests through HTTP or SOCKS proxy"
@@ -21,3 +21,7 @@ tokio = { version = "1.26.0", features = ["net", "io-util"], optional = true }
 enable_sync = []
 enable_tokio = ["tokio", "async-trait"]
 enable_async_std = ["async-std", "futures"]
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
