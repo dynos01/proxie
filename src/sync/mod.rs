@@ -11,20 +11,20 @@ use crate::{
 };
 
 pub trait SyncProxy {
-    fn connect(&self, addr: impl ToTarget) -> Result<SyncTcpStream>;
+    fn connect(&self, addr: impl ToTarget) -> Result<ProxyTcpStream>;
 }
 
-pub struct SyncTcpStream {
+pub struct ProxyTcpStream {
     stream: TcpStream,
 }
 
-impl Read for SyncTcpStream {
+impl Read for ProxyTcpStream {
     fn read(&mut self, buf: &mut [u8]) -> IOResult<usize> {
         self.stream.read(buf)
     }
 }
 
-impl Write for SyncTcpStream {
+impl Write for ProxyTcpStream {
     fn write(&mut self, buf: &[u8]) -> IOResult<usize> {
         self.stream.write(buf)
     }
@@ -34,13 +34,13 @@ impl Write for SyncTcpStream {
     }
 }
 
-impl Read for &SyncTcpStream {
+impl Read for &ProxyTcpStream {
     fn read(&mut self, buf: &mut [u8]) -> IOResult<usize> {
         (&self.stream).read(buf)
     }
 }
 
-impl Write for &SyncTcpStream {
+impl Write for &ProxyTcpStream {
     fn write(&mut self, buf: &[u8]) -> IOResult<usize> {
         (&self.stream).write(buf)
     }

@@ -7,11 +7,11 @@ use crate::{
     utils::*,
     target::ToTarget,
     proxy::HTTPProxy,
-    sync::{SyncProxy, SyncTcpStream},
+    sync::{SyncProxy, ProxyTcpStream},
 };
 
 impl SyncProxy for HTTPProxy {
-    fn connect(&self, addr: impl ToTarget) -> Result<SyncTcpStream> {
+    fn connect(&self, addr: impl ToTarget) -> Result<ProxyTcpStream> {
         let request = make_http_connect_request(&addr, &self)?;
 
         let mut stream = TcpStream::connect((&*self.server, self.port))?;
@@ -31,7 +31,7 @@ impl SyncProxy for HTTPProxy {
 
         parse_http_response(&buffer.as_bytes())?;
 
-        Ok(SyncTcpStream {
+        Ok(ProxyTcpStream {
             stream,
         })
     }
