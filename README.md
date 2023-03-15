@@ -9,7 +9,7 @@
 ## Example
 `proxie` aims to provide a set of API that corresponds to its runtimes' native API. Here is an example of using `tokio` to make HTTP request via SOCKS5 proxy:
 
-```
+```rust
 use tokio::io::{AsyncWriteExt, BufReader, AsyncBufReadExt};
 use futures::future;
 use proxie::{SOCKS5Proxy, tokio::AsyncProxy, Auth};
@@ -51,7 +51,7 @@ This crates replaces the `TcpStream` creation process with two lines. No other m
 
 To use username and password authentication, simply import `proxie::Auth` and use this line to create a proxy server instance:
 
-```
+```rust
 let server = SOCKS5Proxy::new("127.0.0.1", 1080, Auth::new("user", "pass"));
 ```
 
