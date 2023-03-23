@@ -18,6 +18,12 @@ pub struct ProxyTcpStream {
     stream: TcpStream,
 }
 
+impl ProxyTcpStream {
+    pub fn into_tcpstream(self) -> TcpStream {
+        self.stream
+    }
+}
+
 impl Read for ProxyTcpStream {
     fn read(&mut self, buf: &mut [u8]) -> IOResult<usize> {
         self.stream.read(buf)

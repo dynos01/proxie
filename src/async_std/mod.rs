@@ -26,6 +26,12 @@ pub struct ProxyTcpStream {
     stream: TcpStream,
 }
 
+impl ProxyTcpStream {
+    pub fn into_tcpstream(self) -> TcpStream {
+        self.stream
+    }
+}
+
 impl AsyncRead for ProxyTcpStream {
     fn poll_read(
         self: Pin<&mut Self>,
