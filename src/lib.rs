@@ -13,4 +13,4 @@ pub mod tokio;
 mod utils;
 mod prelude;
 
-pub use proxy::{Auth, HTTPProxy, SOCKS5Proxy};
+pub use proxy::{Auth, Proxy, HTTPProxy, SOCKS5Proxy};

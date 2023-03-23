@@ -1,3 +1,4 @@
+#[derive(Clone)]
 pub struct Auth {
     pub(crate) username: String,
     pub(crate) password: String,
@@ -12,6 +13,13 @@ impl Auth {
     }
 }
 
+#[derive(Clone)]
+pub enum Proxy {
+    HTTP(HTTPProxy),
+    SOCKS5(SOCKS5Proxy),
+}
+
+#[derive(Clone)]
 pub struct HTTPProxy {
     pub(crate) server: String,
     pub(crate) port: u16,
@@ -29,6 +37,7 @@ impl HTTPProxy {
     }
 }
 
+#[derive(Clone)]
 pub struct SOCKS5Proxy {
     pub(crate) server: String,
     pub(crate) port: u16,

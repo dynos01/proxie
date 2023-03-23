@@ -85,6 +85,12 @@ impl ToTarget for String {
     }
 }
 
+impl ToTarget for &String {
+    fn to_target(&self) -> Result<Target, MalformedTargetError> {
+        (&**self).to_target()
+    }
+}
+
 impl ToTarget for SocketAddr {
     fn to_target(&self) -> Result<Target, MalformedTargetError> {
         let host = match self {
